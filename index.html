@@ -301,7 +301,7 @@ body {
 }
 .cell.bounce .cell-inner {
   animation: cell-bounce .5s ease-out;
-  background: var(--cell-bg);
+  background: var(--accent-light);
 }
 
 @keyframes cell-ripple {
@@ -847,6 +847,11 @@ function tryInput(idx, num) {
     history.push({ idx, prev: grid[idx] });
     grid[idx]    = num;
     notes[idx].clear();
+    const r = row(idx), c = col(idx), b = box(idx);
+    for (let i = 0; i < 81; i++) {
+      if (i !== idx && (row(i) === r || col(i) === c || box(i) === b))
+        notes[i].delete(num);
+    }
     selectedCell = -1;
     const numDone = grid.filter(v => v === num).length === 9;
     selectedNum  = numDone ? 0 : num;
