@@ -1123,7 +1123,7 @@ function showConfetti() {
     let alive = false;
     for (const p of particles) {
       p.vx *= 0.97;
-      p.vy += gravity;
+      p.vy += (p.gravity ?? gravity);
       p.x  += p.vx;
       p.y  += p.vy;
       p.rot += p.rotSpeed;
@@ -1164,12 +1164,13 @@ function showConfetti() {
 
   // Вторая волна: сверху вниз, когда первые начинают падать
   setTimeout(() => {
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 120; i++) {
       particles.push({
         x: Math.random() * W,
-        y: -(10 + Math.random() * 150),
+        y: -(10 + Math.random() * H),
         vx: (Math.random() - 0.5) * 3,
-        vy: 0.2 + Math.random() * 0.5,
+        vy: 2 + Math.random() * 2,
+        gravity: 0.06,
         color: colors[Math.floor(Math.random() * colors.length)],
         w: 5 + Math.random() * 6,
         h: 3 + Math.random() * 4,
